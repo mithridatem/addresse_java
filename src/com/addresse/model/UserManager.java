@@ -55,7 +55,7 @@ public class UserManager {
             System.out.println(rs);
             //boucler sur le résultat
             while (rs.next()){
-                //test si la colonne id  posséde  une valeur
+                //test si la colonne id  possède  une valeur
                 if(rs.getString(1) !=null){
                     verif.setId(rs.getInt(1));
                     verif.setNom(rs.getString("nom"));
@@ -72,36 +72,53 @@ public class UserManager {
         }
         return verif;
     }
-    public static User updateUser(User user) {
-        User useradd = new User();
-        try {
-            //connexion
+
+    public static boolean updateUser(User user){
+        boolean statut = false;
+        try{
             Statement smt = connexion.createStatement();
-            //requête
-            String req = "UPDATE users SET nom = ?, prenom = ? WHERE email = ?";
-            //préparer la requête
-            PreparedStatement preparedStatement = connexion.prepareStatement(req);
-            //binder les 4 paramètres
+            String sql = "UPDATE users SET nom = ?, prenom = ? WHERE email = ?";
+            PreparedStatement preparedStatement = connexion.prepareStatement(sql);
             preparedStatement.setString(1, user.getNom());
             preparedStatement.setString(2, user.getPrenom());
             preparedStatement.setString(3, user.getEmail());
-
-            //exécution de la requête
-            int addedRows = preparedStatement.executeUpdate();
-            //tester si la requête est bien passé
-            if (addedRows > 0) {
-                //injecter les valeurs dans l'objet de sortie
-                useradd.setNom(user.getNom());
-                useradd.setPrenom(user.getPrenom());
-                useradd.setEmail(user.getEmail());
-                useradd.setPassword(user.getPassword());
+            int nbrLigne = preparedStatement.executeUpdate();
+            if(nbrLigne == 1) {
+                /*updateUser.setNom(user.getNom());
+                updateUser.setPrenom(user.getPrenom());
+                updateUser.setEmail(user.getEmail());
+                updateUser.setPassword(user.getPassword());*/
+                statut = true;
             }
             smt.close();
-            //connexion.close();
-        } catch (Exception e) {
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
-        return useradd;
+        //return updateUser;
+        return statut;
     }
-
+    public static User updateUser2(User user){
+        User updateUser = new User();
+        try{
+            Statement smt = connexion.createStatement();
+            String sql = "UPDATE users SET nom = ?, prenom = ? WHERE email = ?";
+            PreparedStatement preparedStatement = connexion.prepareStatement(sql);
+            preparedStatement.setString(1, user.getNom());
+            preparedStatement.setString(2, user.getPrenom());
+            preparedStatement.setString(3, user.getEmail());
+            int nbrLigne = preparedStatement.executeUpdate();
+            if(nbrLigne == 1) {
+                updateUser.setNom(user.getNom());
+                updateUser.setPrenom(user.getPrenom());
+                updateUser.setEmail(user.getEmail());
+                updateUser.setPassword(user.getPassword());
+            }
+            smt.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return updateUser;
+    }
 }
