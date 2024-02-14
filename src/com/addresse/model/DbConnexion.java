@@ -1,11 +1,9 @@
 package com.addresse.model;
-
 import java.sql.*;
+
+import static com.addresse.model.Env.*;
+
 public class DbConnexion {
-    //Attribut paramètre BDD
-    static final String DB_URL = "jdbc:mysql://localhost/Javacours?serverTimezone=UTC";
-    static final String USERNAME = "root";
-    static final String PASSWORD = "";
     //Connexion à la BDD
     private static Connection connexion;
     static {

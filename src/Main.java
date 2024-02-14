@@ -4,6 +4,6 @@ public class Main {
         //instancier un objet User
         User test = new User("Mithridate","Mathieu","test@test.com","123456");
 
-        UserManager.addUser(test);
+        System.out.println(UserManager.addUser(test).getNom());
     }
 }
