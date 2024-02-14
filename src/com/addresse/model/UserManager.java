@@ -2,7 +2,7 @@ package com.addresse.model;
 
 import java.lang.reflect.Field;
 import java.sql.*;
-
+import java.util.ArrayList;
 public class UserManager {
     private static Connection connexion = DbConnexion.getConnexion();
 
@@ -120,5 +120,30 @@ public class UserManager {
             e.printStackTrace();
         }
         return updateUser;
+    }
+    public static ArrayList<User> getAllUser(){
+        //créer une arrayList
+        ArrayList<User> users = new ArrayList<>();
+        try {
+            Statement smt = connexion.createStatement();
+            String sql = "SELECT id, nom, prenom, email, pwd FROM users";
+            PreparedStatement preparedStatement = connexion.prepareStatement(sql);
+            ResultSet resultat = preparedStatement.executeQuery();
+            while(resultat.next()) {
+                User user = new User();
+                user.setId(resultat.getInt(1));
+                user.setNom(resultat.getString("nom"));
+                user.setPrenom(resultat.getString("prenom"));
+                user.setEmail(resultat.getString("email"));
+                user.setPassword(resultat.getString("pwd"));
+                users.add(user);
+            }
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+
     }
 }
