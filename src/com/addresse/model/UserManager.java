@@ -33,7 +33,7 @@ public class UserManager {
                 useradd.setPassword(user.getPassword());
             }
             smt.close();
-            connexion.close();
+            //connexion.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,13 +65,43 @@ public class UserManager {
                 }
             }
             smt.close();
-            connexion.close();
+            //connexion.close();
         }
         catch (Exception e){
             e.printStackTrace();
         }
         return verif;
     }
-    
+    public static User updateUser(User user) {
+        User useradd = new User();
+        try {
+            //connexion
+            Statement smt = connexion.createStatement();
+            //requête
+            String req = "UPDATE users SET nom = ?, prenom = ? WHERE email = ?";
+            //préparer la requête
+            PreparedStatement preparedStatement = connexion.prepareStatement(req);
+            //binder les 4 paramètres
+            preparedStatement.setString(1, user.getNom());
+            preparedStatement.setString(2, user.getPrenom());
+            preparedStatement.setString(3, user.getEmail());
+
+            //exécution de la requête
+            int addedRows = preparedStatement.executeUpdate();
+            //tester si la requête est bien passé
+            if (addedRows > 0) {
+                //injecter les valeurs dans l'objet de sortie
+                useradd.setNom(user.getNom());
+                useradd.setPrenom(user.getPrenom());
+                useradd.setEmail(user.getEmail());
+                useradd.setPassword(user.getPassword());
+            }
+            smt.close();
+            //connexion.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return useradd;
+    }
 
 }
