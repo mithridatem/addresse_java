@@ -5,7 +5,6 @@ import java.sql.*;
 import java.util.ArrayList;
 public class UserManager {
     private static Connection connexion = DbConnexion.getConnexion();
-
     //Méthode pour ajouter un utilisateur
     @org.jetbrains.annotations.NotNull
     public static User addUser(User user) {
@@ -72,7 +71,6 @@ public class UserManager {
         }
         return verif;
     }
-
     public static boolean updateUser(User user){
         boolean statut = false;
         try{
