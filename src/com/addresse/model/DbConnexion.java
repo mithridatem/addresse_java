@@ -5,7 +5,7 @@ import static com.addresse.model.Env.*;
 
 public class DbConnexion {
     //Connexion à la BDD
-    private static Connection connexion;
+    private static final Connection connexion;
     static {
         try {
             connexion = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);

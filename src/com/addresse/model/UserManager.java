@@ -1,10 +1,8 @@
 package com.addresse.model;
-
-import java.lang.reflect.Field;
 import java.sql.*;
 import java.util.ArrayList;
 public class UserManager {
-    private static Connection connexion = DbConnexion.getConnexion();
+    private final static Connection connexion = DbConnexion.getConnexion();
     //Méthode pour ajouter un utilisateur
     @org.jetbrains.annotations.NotNull
     public static User addUser(User user) {
